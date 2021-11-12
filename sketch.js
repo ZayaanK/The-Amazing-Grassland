@@ -1,4 +1,5 @@
 var Grassland, ground
+var chance = 3
 function preload(){
 
 }
@@ -7,7 +8,7 @@ function preload(){
 function setup(){
   createCanvas(windowWidth, windowHeight)
    Grassland = createSprite(100,height-100,100,100);
-   ground = createSprite(width/2,height-35,width,70);
+   ground = createSprite(width/2,height-35,width+500,70);
    
    //bad2 = createSprite(850,height-120,100,100)
    //bad3 = createSprite(1280,height-120,100,100)
@@ -16,6 +17,18 @@ function setup(){
    enemygroup = new Group()
    //bad2.shapeColor = "red"
    //bad3.shapeColor = "red"
+life1 = createSprite(50, 50, 100, 25);
+life2 = createSprite(150, 50, 100, 25);
+life3 = createSprite(250, 50, 100, 25);
+life1.shapeColor = "black";
+life2.shapeColor = "black";
+life3.shapeColor = "black";
+life11 = createSprite(50, 50, 95, 25);
+life21 = createSprite(150, 50, 95, 25);
+life31 = createSprite(250, 50, 95, 25);
+life11.shapeColor = "blue";
+life21.shapeColor = "blue";
+life31.shapeColor = "blue";
    
 }
 function draw() {
@@ -37,16 +50,21 @@ function draw() {
  if (Grassland.isTouching(enemygroup)){
   if(keyDown("space")){
     enemygroup.destroyEach()
-
+    
   }
   else{
-    Grassland.overlap(enemygroup,function(good,bad){
-      fill("black")
-      rect (150,50,50,25)
-    })
-   
+    chance = chance-1
   }
  }
+ if(chance==2){
+   life31.visible = false
+ }
+ if(chance==1){
+  life21.visible = false
+}
+if(chance==0){
+  life11.visible = false
+}
  
 /*if (Grassland.isTouching(bad2)){
   if(keyDown("space")){
@@ -62,28 +80,16 @@ function draw() {
   }
  }*/
   Grassland.collide(ground);
-  healthbar()
   enemy();
   drawSprites()
   
 }
-function healthbar(){
-  push ()
-  fill ("black")
-  rect (50,50,50,25)
-  rect (100,50,50,25)
-  rect (150,50,50,25)
-  fill ("blue")
-  rect (50,50,50,25)
-  rect (100,50,50,25)
-  rect (150,50,50,25)
-  pop ()
-}
+
 function enemy(){
   if(frameCount%550==0){
     bad1 = createSprite(width,height-120,100,100);
     bad1.shapeColor = "red"
-    bad1.velocityX = -2.5
+    bad1.velocityX = -5
     enemygroup.add(bad1)
   }
 }
